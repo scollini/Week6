@@ -9,6 +9,7 @@ slaves <- read.csv("~/Desktop/MountVernon/Spreadsheets/slaves.csv", stringsAsFac
 
 ## This function shows all the children during each census
 slave_children <- slaves %>% 
+  select(Name, Gender, Birth.Year, Skill, Farm, Census) %>%
   filter(Skill == "Child")
 ## This chart shows the number of children on each farm for 1786 and 1799. Ferry Farm evolved into Union Farm, 
 ## which the chart illustrates. Every farm had more children, especially Muddy Hole and Mansion House. 
@@ -36,6 +37,9 @@ ggplot(data = slave_pop, aes(x = Census, y = n)) + geom_line() + theme(axis.text
 slave_mothers <- slaves %>%
   group_by(Mother) %>%
   summarize(Name = n())
+
+ggplot(data = slave_mothers, aes(x = Mother, y = n)) + geom_bar() + theme(axis.text.x=element_text(angle = 90, hjust = 0))
+
 ## It would be interesting to compare the distribution of spouses across the estate. Slaves could not legally marry, so it's
 ## interesting anyway that Washington listed slave spouses. With this new table, I wanted to see how many slave couples were on 
 ## the same farm or on different farms. I then want to compare that finding to their children. 
@@ -49,5 +53,11 @@ slave_fam <- slaves %>%
 ## I tried to separate out each census year. 
 slaves_sep <- slaves %>%
   separate(Census, c("1743", "1750", "1752", "1754", "1757", "1762", "1763", "1764", "1772" "1786", "1799"))
+
+# I will change the census years with () to just numbers.
+Census <- c("(1799)" = "1799")
+# I will then try to standardize the birth years, such as removing the ()s. 
+Birth.Year <- c("1729 (1799)" = "1729")
+
 
 
