@@ -8,9 +8,9 @@ library(lubridate)
 
 state <- read.csv("~/Desktop/Clio-3/Week6/historydata/data-raw/nhgis0011_ts_state.csv", stringsAsFactors = FALSE)
 
-nat_pop <- state %>%
-  group_by(YEAR) %>%
-  summarize(Population = sum(A00AA, na.rm = TRUE))
+nat_pop <- state %>% ## Create a new name for the table
+  group_by(YEAR) %>% ## Group each different census year together
+  summarize(Population = sum(A00AA, na.rm = TRUE)) ## Then sum up each state population for that census
 
 
 
